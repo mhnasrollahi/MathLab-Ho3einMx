@@ -1,0 +1,1465 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080d19">
+<title>MathLab | Ho3ein Mx</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- MathJax config must come BEFORE the MathJax script -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']]
+  },
+  startup: { typeset: true },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/dist/chartjs-plugin-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjs@14.8.1/lib/browser/math.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+
+<style>
+:root {
+  --bg:#080d19;--panel:#101a2b;--panel2:#0b1423;
+  --border:#263852;--text:#edf4ff;--muted:#96a9c4;
+  --blue:#60a5fa;--cyan:#67e8f9;--purple:#a78bfa;
+  --green:#6ee7b7;--red:#fb7185;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;color:var(--text);
+  background:radial-gradient(ellipse at 5% 0%,#183355 0,transparent 35%),
+  radial-gradient(ellipse at 100% 15%,#241640 0,transparent 28%),var(--bg);
+  font-family:"Vazirmatn",Tahoma,sans-serif;line-height:1.8
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.app{max-width:1200px;margin:auto;padding:22px 17px 0}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{
+  width:54px;height:54px;display:grid;place-items:center;border-radius:17px;
+  color:#07111e;font-size:27px;font-weight:800;
+  background:linear-gradient(135deg,var(--cyan),var(--blue),var(--purple));
+  box-shadow:0 0 30px #60a5fa25
+}
+.brand h1{margin:0;font-size:29px;line-height:1.35;direction:ltr;text-align:right}
+.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.status{font-size:12px;color:var(--green);border:1px solid #6ee7b72b;background:#6ee7b710;padding:5px 12px;border-radius:30px}
+.hero{
+  position:relative;overflow:hidden;padding:27px;margin-bottom:20px;
+  border:1px solid #304665;border-radius:23px;
+  background:linear-gradient(120deg,#142b49e8,#121629ed)
+}
+.hero:after{content:"∫";position:absolute;left:24px;top:-46px;font-size:180px;line-height:1;color:#67e8f90b;pointer-events:none}
+.hero h2{margin:0 0 7px;font-size:23px}
+.hero p{margin:0;color:#b3c4dc;font-size:14px;max-width:720px}
+.nav{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 12px;margin-bottom:10px;scrollbar-width:thin}
+.nav button{
+  flex:0 0 auto;color:var(--muted);border:1px solid var(--border);
+  background:#0d1524;border-radius:12px;padding:9px 15px;transition:.2s
+}
+.nav button:hover{border-color:var(--blue);color:var(--text)}
+.nav button.active{color:#07111e;font-weight:800;border-color:transparent;background:linear-gradient(135deg,var(--cyan),var(--blue))}
+.page{display:none}.page.active{display:block}
+.panel{
+  min-width:0;padding:21px;margin-bottom:17px;border-radius:19px;
+  border:1px solid var(--border);background:linear-gradient(145deg,#121d30f7,#0e1727f7)
+}
+.panel h2{margin:0 0 9px;font-size:20px}
+.panel h3{margin:0 0 12px;font-size:16px}
+.muted{color:var(--muted);font-size:13px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.field{min-width:0;margin-bottom:14px}
+label{display:block;color:#bdcce1;font-size:13px;margin-bottom:6px}
+input,select{
+  width:100%;min-width:0;color:var(--text);background:#091220;
+  border:1px solid var(--border);border-radius:11px;padding:10px 12px
+}
+input:focus,select:focus{outline:none;border-color:var(--blue)}
+input[dir=ltr]{text-align:left}
+select option{background:var(--panel)}
+.btn{
+  border:0;border-radius:11px;padding:10px 17px;font-weight:800;color:#07111e;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));transition:.15s
+}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.secondary{color:var(--text);background:#1b2a42;border:1px solid #344968}
+.result{
+  min-height:49px;padding:12px;background:#080f1c;border:1px solid #273954;
+  border-radius:12px;overflow-wrap:anywhere
+}
+.result.ltr{direction:ltr;text-align:left}
+.result.mathresult{direction:ltr;text-align:center;font-size:17px;color:var(--cyan);overflow-x:auto}
+.notice{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:12px;color:var(--muted);background:#0a1322;border:1px solid #22334c;overflow-wrap:anywhere}
+.error{color:var(--red)!important}.success{color:var(--green)!important}
+
+/* Engineering calculator */
+.calc{max-width:500px;margin:auto}
+.calc-settings{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px}
+.pill{color:var(--muted);border:1px solid var(--border);background:#111e30;border-radius:10px;padding:5px 10px;font-size:12px}
+.pill.active{color:var(--cyan);border-color:#67e8f960}
+.calc-display{
+  border:1px solid #304665;background:linear-gradient(145deg,#07111f,#0d192a);
+  border-radius:17px;padding:18px 16px;margin-bottom:14px;min-height:115px;overflow:hidden
+}
+.calc-expression{min-height:32px;color:#a8bdd8;font-size:18px;direction:ltr;text-align:left;overflow-wrap:anywhere;user-select:none}
+.calc-answer{min-height:42px;direction:ltr;text-align:left;color:var(--cyan);font-size:30px;font-weight:800;overflow-wrap:anywhere;user-select:none}
+.keypad{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
+.key{
+  min-width:0;min-height:49px;border-radius:12px;border:1px solid #293c58;
+  color:#e3edff;background:#17243a;font-size:15px;font-weight:700;
+  user-select:none;-webkit-tap-highlight-color:transparent;transition:.15s
+}
+.key:hover{background:#223653;border-color:#52739e}
+.key:active{transform:scale(.96)}
+.key.fn{color:var(--cyan);background:#102b3a}
+.key.op{color:#c4b5fd;background:#24203e}
+.key.danger{color:#fda4af;background:#341a2a}
+.key.equal{color:#07111e;background:linear-gradient(135deg,var(--cyan),var(--blue));border:0;font-size:21px}
+.key.zero{grid-column:span 2}
+
+/* Math expression editor */
+.math-editor {
+  border: 1px solid #30435f;
+  background: linear-gradient(145deg, #091321, #0b1728);
+  border-radius: 16px;
+  padding: 11px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.math-editor:focus-within {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px #60a5fa12;
+}
+
+.math-editor input.expression-input {
+  border: 0;
+  border-radius: 8px;
+  background: #0c192a;
+  padding: 12px 10px;
+  font-family: "Vazirmatn", monospace;
+  font-size: 16px;
+  direction: ltr;
+  text-align: left;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+  caret-color: var(--cyan);
+}
+
+.math-editor input.expression-input:focus {
+  outline: 1px solid #34506f;
+}
+
+.math-preview {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: ltr;
+  text-align: center;
+  overflow-x: auto;
+  padding: 12px 6px;
+  margin-top: 9px;
+  color: var(--cyan);
+  background: radial-gradient(ellipse at center, #12243a, #0a1423);
+  border: 1px solid #223852;
+  border-radius: 11px;
+}
+
+.math-preview mjx-container {
+  margin: 0 !important;
+  max-width: 100%;
+}
+
+.math-keyboard {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 11px;
+}
+
+.math-key {
+  min-width: 0;
+  min-height: 43px;
+  padding: 7px 4px;
+  color: #dce9ff;
+  background: linear-gradient(145deg, #1a2b43, #142238);
+  border: 1px solid #304762;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: .15s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.math-key:hover {
+  color: var(--cyan);
+  border-color: var(--blue);
+  background: #203651;
+}
+
+.math-key:active {
+  transform: scale(.95);
+}
+
+.math-key.fn {
+  color: var(--cyan);
+  background: #102b3a;
+  border-color: #245065;
+}
+
+.math-key.op {
+  color: #c4b5fd;
+  background: #24203e;
+  border-color: #403766;
+}
+
+.math-key.danger {
+  color: #fda4af;
+  background: #351a2a;
+  border-color: #663047;
+}
+
+.math-key.utility {
+  color: #d5e3f7;
+  background: #0d1929;
+  border-color: #344761;
+}
+
+.math-key.wide {
+  grid-column: span 2;
+}
+
+.keyboard-caption {
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 9px;
+  line-height: 1.7;
+}
+
+@media(max-width:480px) {
+  .math-keyboard {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .math-key {
+    min-height: 46px;
+    font-size: 13px;
+  }
+
+  .math-editor {
+    padding: 9px;
+  }
+}
+/* Charts */
+.chart-wrap{position:relative;width:100%;height:320px;direction:ltr}
+.chart-wrap canvas{max-width:100%}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:center}
+th{color:var(--cyan);background:#101d30}
+td{color:#dce7f8;direction:ltr}
+.preset-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+.preset{
+  border:1px solid var(--border);border-radius:12px;background:#0b1423;
+  color:var(--text);padding:12px;text-align:center;transition:.18s
+}
+.preset:hover{border-color:var(--blue);background:#13243b}
+.preset .eq{display:block;direction:ltr;color:var(--cyan);font-size:17px;margin-bottom:3px}
+.preset small{color:var(--muted);font-size:11px}
+
+/* Formula cards */
+.formula-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.formula-group{padding:15px;border:1px solid var(--border);border-radius:15px;background:#0c1524}
+.formula-group h3{color:var(--cyan);margin:0 0 11px}
+.formula-eq{
+  display:flex;align-items:center;justify-content:center;min-height:57px;
+  margin:9px 0;padding:13px 9px;border-radius:11px;border:1px solid #263954;
+  background:linear-gradient(135deg,#101d30,#0a1321);direction:ltr;
+  text-align:center;overflow-x:auto
+}
+.formula-eq mjx-container{margin:0!important}
+footer{text-align:center;margin-top:28px;padding:24px 10px;border-top:1px solid #1c2b42;color:var(--muted);font-size:12px}
+footer .signature{direction:ltr;margin-bottom:3px;font-size:15px}
+footer strong{color:var(--cyan);letter-spacing:.4px}
+@media(max-width:760px){
+  .grid2,.grid3,.formula-list{grid-template-columns:1fr}
+  .preset-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .app{padding:15px 11px 0}.hero{padding:21px}.panel{padding:16px}
+  .status{display:none}.key{min-height:46px}
+}
+@media(max-width:380px){.keypad{gap:5px}.key{font-size:13px;min-height:43px}.preset{padding:9px}}
+
+/* Interactive graph controls */
+.graph-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 13px;
+  margin-bottom: 15px;
+}
+
+.graph-toolbar-title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.graph-toolbar-title strong {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.graph-toolbar-title span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.graph-zoom-controls {
+  display: flex;
+  gap: 7px;
+  direction: ltr;
+}
+
+.zoom-btn {
+  min-width: 43px;
+  min-height: 42px;
+  padding: 7px 12px;
+  color: var(--cyan);
+  background: linear-gradient(145deg, #172940, #101b2d);
+  border: 1px solid #34506f;
+  border-radius: 11px;
+  font-size: 19px;
+  font-weight: 800;
+  transition: .18s;
+}
+
+.zoom-btn:hover {
+  border-color: var(--cyan);
+  background: #203753;
+  transform: translateY(-1px);
+}
+
+.zoom-btn.reset {
+  direction: rtl;
+  color: var(--text);
+  font-size: 12px;
+}
+
+.graph-chart-wrap {
+  height: 380px;
+  touch-action: pan-y;
+}
+
+@media(max-width:480px) {
+  .graph-toolbar {
+    align-items: stretch;
+  }
+
+  .graph-zoom-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr;
+  }
+
+  .zoom-btn {
+    min-width: 0;
+    min-height: 46px;
+  }
+
+  .graph-chart-wrap {
+    height: 320px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+<div class="app">
+<header>
+  <div class="brand">
+    <div class="logo">∑</div>
+    <div>
+      <h1>MathLab</h1>
+      <p>MATHEMATICS · CALCULUS · ENGINEERING</p>
+    </div>
+  </div>
+  <div class="status">● SYSTEM READY</div>
+</header>
+
+<section class="hero">
+  <h2>آزمایشگاه ریاضی</h2>
+  <p>محاسبات مهندسی، مشتق، انتگرال، سری تیلور و رسم نمودار توابع در یک محیط یکپارچه.</p>
+</section>
+
+<nav class="nav">
+  <button class="active" data-page="calculator">ماشین‌حساب</button>
+  <button data-page="taylor">سری تیلور</button>
+  <button data-page="derivative">مشتق</button>
+  <button data-page="integral">انتگرال</button>
+  <button data-page="limit">حد</button>
+  <button data-page="graph">نمودار</button>
+  <button data-page="formulas">فرمول‌نامه</button>
+</nav>
+
+<!-- CALCULATOR -->
+<section class="page active" id="calculator">
+<div class="panel">
+  <h2>ماشین‌حساب مهندسی</h2>
+  <p class="muted">ورود عبارت با دکمه‌های ماشین‌حساب</p>
+  <div class="calc">
+    <div class="calc-settings">
+      <div>
+        <button class="pill active" id="degBtn" onclick="setAngle('DEG')">DEG</button>
+        <button class="pill" id="radBtn" onclick="setAngle('RAD')">RAD</button>
+      </div>
+      <button class="pill" onclick="setPrecision()">دقت: <span id="precisionText">8</span></button>
+    </div>
+    <div class="calc-display">
+      <div class="calc-expression" id="calcExpression">0</div>
+      <div class="calc-answer" id="calcAnswer">0</div>
+    </div>
+    <div class="keypad" id="keypad">
+      <button class="key danger" data-action="clear">AC</button>
+      <button class="key danger" data-action="backspace">⌫</button>
+      <button class="key fn" data-value="(">(</button>
+      <button class="key fn" data-value=")">)</button>
+      <button class="key op" data-value="÷">÷</button>
+
+      <button class="key fn" data-value="sin(">sin</button>
+      <button class="key fn" data-value="cos(">cos</button>
+      <button class="key fn" data-value="tan(">tan</button>
+      <button class="key fn" data-value="sqrt(">√</button>
+      <button class="key op" data-value="×">×</button>
+
+      <button class="key fn" data-value="asin(">sin⁻¹</button>
+      <button class="key fn" data-value="acos(">cos⁻¹</button>
+      <button class="key fn" data-value="atan(">tan⁻¹</button>
+      <button class="key fn" data-value="^2">x²</button>
+      <button class="key op" data-value="−">−</button>
+
+      <button class="key" data-value="7">7</button>
+      <button class="key" data-value="8">8</button>
+      <button class="key" data-value="9">9</button>
+      <button class="key fn" data-value="^">xʸ</button>
+      <button class="key op" data-value="+">+</button>
+
+      <button class="key" data-value="4">4</button>
+      <button class="key" data-value="5">5</button>
+      <button class="key" data-value="6">6</button>
+      <button class="key fn" data-value="log(">log</button>
+      <button class="key fn" data-value="ln(">ln</button>
+
+      <button class="key" data-value="1">1</button>
+      <button class="key" data-value="2">2</button>
+      <button class="key" data-value="3">3</button>
+      <button class="key fn" data-value="π">π</button>
+      <button class="key fn" data-value="e">e</button>
+
+      <button class="key zero" data-value="0">0</button>
+      <button class="key" data-value=".">.</button>
+      <button class="key fn" data-value="Ans">Ans</button>
+      <button class="key equal" data-action="equals">=</button>
+    </div>
+    <div class="notice" id="calcMessage">آماده محاسبه</div>
+  </div>
+</div>
+</section>
+
+<!-- TAYLOR -->
+<section class="page" id="taylor">
+<div class="panel">
+  <h2>بسط تیلور و مک‌لورین</h2>
+  <div class="grid2">
+    <div>
+      <div class="field"><label for="tFunction">تابع</label>
+        <select id="tFunction">
+          <option value="exp">eˣ</option><option value="sin">sin(x)</option>
+          <option value="cos">cos(x)</option><option value="ln">ln(1+x)</option>
+          <option value="atan">arctan(x)</option><option value="geom">1/(1−x)</option>
+        </select>
+      </div>
+      <div class="field"><label for="tCenter">مرکز بسط a</label><input id="tCenter" type="number" step="any" value="0"></div>
+      <div class="field"><label for="tDegree">درجه چندجمله‌ای</label><input id="tDegree" type="number" min="1" max="20" value="5"></div>
+      <div class="field"><label for="tX">مقدار x</label><input id="tX" type="number" step="any" value="0.5"></div>
+      <button class="btn" onclick="runTaylor()">محاسبه بسط</button>
+    </div>
+    <div>
+      <label>چندجمله‌ای تیلور</label><div class="result mathresult" id="tPolynomial">\(P_n(x)\)</div>
+      <div style="height:10px"></div>
+      <label>مقدار تقریبی</label><div class="result ltr" id="tApprox">—</div>
+      <div style="height:10px"></div>
+      <label>مقدار واقعی</label><div class="result ltr" id="tActual">—</div>
+      <div style="height:10px"></div>
+      <label>خطای مطلق</label><div class="result ltr" id="tError">—</div>
+    </div>
+  </div>
+</div>
+<div class="panel">
+  <h3>مقایسه تابع اصلی و تقریب</h3>
+  <div class="chart-wrap"><canvas id="tChart"></canvas></div>
+  <div class="notice" id="tChartMessage">برای نمایش نمودار، بسط را محاسبه کنید.</div>
+</div>
+<div class="panel">
+  <h3>جمله‌های سری</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>k</th><th>جمله</th><th>ضریب</th></tr></thead>
+    <tbody id="tTerms"><tr><td colspan="3">—</td></tr></tbody>
+  </table></div>
+</div>
+</section>
+
+<!-- DERIVATIVE -->
+<section class="page" id="derivative">
+<div class="panel">
+  <h2>محاسبه مشتق</h2>
+  <div class="grid2">
+    <div>
+      <div class="field"><label for="dFunction">تابع f(x)</label>
+        <div class="math-editor">
+          <input class="expression-input" id="dFunction" dir="ltr" value="x^3 + 2*x^2 - 5*x + 1" autocomplete="off" spellcheck="false">
+          <div class="math-preview" id="dPreview">\(x^3+2x^2-5x+1\)</div>
+          <div class="math-keyboard"></div>
+        </div>
+      </div>
+      <div class="field"><label for="dOrder">مرتبه مشتق</label>
+        <select id="dOrder"><option value="1">مشتق اول</option><option value="2">مشتق دوم</option><option value="3">مشتق سوم</option><option value="4">مشتق چهارم</option></select>
+      </div>
+      <div class="field"><label for="dPoint">نقطه محاسبه</label><input id="dPoint" type="number" step="any" value="2"></div>
+      <button class="btn" onclick="runDerivative()">محاسبه مشتق</button>
+    </div>
+    <div>
+      <label>مشتق نمادین</label><div class="result mathresult" id="dResult">—</div>
+      <div style="height:12px"></div>
+      <label>مقدار مشتق در نقطه</label><div class="result ltr" id="dAtPoint">—</div>
+      <div class="notice" id="dMessage">—</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- INTEGRAL -->
+<section class="page" id="integral">
+<div class="panel">
+  <h2>محاسبه انتگرال</h2>
+  <div class="grid2">
+    <div>
+      <div class="field"><label for="iFunction">تابع f(x)</label>
+        <div class="math-editor">
+          <input class="expression-input" id="iFunction" dir="ltr" value="x^2 + 2*x" autocomplete="off" spellcheck="false">
+          <div class="math-preview" id="iPreview">\(x^2+2x\)</div>
+          <div class="math-keyboard"></div>
+        </div>
+      </div>
+      <div class="field"><label for="iType">نوع انتگرال</label>
+        <select id="iType"><option value="indefinite">نامعین</option><option value="definite">معین</option></select>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="iLower">حد پایین</label><input id="iLower" type="number" step="any" value="0"></div>
+        <div class="field"><label for="iUpper">حد بالا</label><input id="iUpper" type="number" step="any" value="2"></div>
+      </div>
+      <button class="btn" onclick="runIntegral()">محاسبه انتگرال</button>
+    </div>
+    <div>
+      <label>نتیجه نمادین</label><div class="result mathresult" id="iResult">—</div>
+      <div style="height:12px"></div>
+      <label>مقدار انتگرال معین</label><div class="result ltr" id="iDefinite">—</div>
+      <div class="notice" id="iMessage">—</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- LIMIT -->
+<section class="page" id="limit">
+<div class="panel">
+  <h2>بررسی عددی حد تابع</h2>
+  <div class="grid2">
+    <div>
+      <div class="field"><label for="lFunction">تابع f(x)</label>
+        <div class="math-editor">
+          <input class="expression-input" id="lFunction" dir="ltr" value="(x^2 - 1)/(x - 1)" autocomplete="off" spellcheck="false">
+          <div class="math-preview" id="lPreview">\( \frac{x^2-1}{x-1} \)</div>
+          <div class="math-keyboard"></div>
+        </div>
+      </div>
+      <div class="field"><label for="lPoint">نقطه حد</label><input id="lPoint" type="number" step="any" value="1"></div>
+      <div class="field"><label for="lSide">سمت بررسی</label>
+        <select id="lSide"><option value="both">چپ و راست</option><option value="left">از چپ</option><option value="right">از راست</option></select>
+      </div>
+      <button class="btn" onclick="runLimit()">بررسی حد</button>
+    </div>
+    <div>
+      <label>حد از چپ</label><div class="result ltr" id="lLeft">—</div>
+      <div style="height:10px"></div>
+      <label>حد از راست</label><div class="result ltr" id="lRight">—</div>
+      <div style="height:10px"></div>
+      <label>جمع‌بندی</label><div class="result mathresult" id="lConclusion">—</div>
+      <div class="notice" id="lMessage">نتیجه عددی به‌تنهایی اثبات ریاضی نیست.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- GRAPH -->
+<section class="page" id="graph">
+<div class="panel">
+  <h2>رسم نمودار تابع</h2>
+  <p class="muted">یک نمونه را انتخاب کنید یا تابع دلخواهتان را وارد کنید.</p>
+  <div class="preset-grid">
+    <button class="preset" data-func="x^2"><span class="eq">\(x^2\)</span><small>سهمی</small></button>
+    <button class="preset" data-func="x^3"><span class="eq">\(x^3\)</span><small>تابع مکعبی</small></button>
+    <button class="preset" data-func="sin(x)"><span class="eq">\(\sin x\)</span><small>موج سینوسی</small></button>
+    <button class="preset" data-func="cos(x)"><span class="eq">\(\cos x\)</span><small>موج کسینوسی</small></button>
+    <button class="preset" data-func="1/x"><span class="eq">\(\frac{1}{x}\)</span><small>تابع گویا</small></button>
+    <button class="preset" data-func="sqrt(x)"><span class="eq">\(\sqrt{x}\)</span><small>تابع رادیکالی</small></button>
+    <button class="preset" data-func="exp(x)"><span class="eq">\(e^x\)</span><small>تابع نمایی</small></button>
+    <button class="preset" data-func="log(x)"><span class="eq">\(\ln x\)</span><small>لگاریتم طبیعی</small></button>
+    <button class="preset" data-func="abs(x)"><span class="eq">\(|x|\)</span><small>قدر مطلق</small></button>
+  </div>
+  <div class="field"><label for="gFunction">تابع f(x)</label>
+    <div class="math-editor">
+      <input class="expression-input" id="gFunction" dir="ltr" value="sin(x)" autocomplete="off" spellcheck="false">
+      <div class="math-preview" id="gPreview">\(\sin x\)</div>
+      <div class="math-keyboard"></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="field"><label for="gMin">شروع بازه x</label><input id="gMin" type="number" value="-10" step="any"></div>
+    <div class="field"><label for="gMax">پایان بازه x</label><input id="gMax" type="number" value="10" step="any"></div>
+  </div>
+  <button class="btn" onclick="runGraph()">رسم نمودار</button>
+</div>
+<div class="panel">
+  <div class="graph-toolbar">
+    <div class="graph-toolbar-title">
+      <strong>نمای نمودار</strong>
+      <span>با لمس یا ماوس زوم کن و نمودار را جابه‌جا کن</span>
+    </div>
+
+    <div class="graph-zoom-controls">
+      <button type="button" class="zoom-btn" onclick="zoomGraph(1.25)" aria-label="Zoom in">＋</button>
+      <button type="button" class="zoom-btn" onclick="zoomGraph(0.8)" aria-label="Zoom out">−</button>
+      <button type="button" class="zoom-btn reset" onclick="resetGraphZoom()">↺ بازنشانی</button>
+    </div>
+  </div>
+
+  <div class="chart-wrap graph-chart-wrap">
+    <canvas id="gChart"></canvas>
+  </div>
+
+  <div class="notice" id="gMessage">—</div>
+</div>
+</section>
+
+<!-- FORMULA LIBRARY -->
+<section class="page" id="formulas">
+<div class="panel">
+  <h2>فرمول‌نامه ریاضی</h2>
+  <div class="formula-list">
+
+    <article class="formula-group">
+      <h3>مشتق‌های پایه</h3>
+      <div class="formula-eq">\[\frac{d}{dx}x^n=nx^{n-1}\]</div>
+      <div class="formula-eq">\[\frac{d}{dx}\sin x=\cos x\]</div>
+      <div class="formula-eq">\[\frac{d}{dx}\cos x=-\sin x\]</div>
+      <div class="formula-eq">\[\frac{d}{dx}e^x=e^x\]</div>
+      <div class="formula-eq">\[\frac{d}{dx}\ln x=\frac1x\]</div>
+    </article>
+
+    <article class="formula-group">
+      <h3>قواعد مشتق‌گیری</h3>
+      <div class="formula-eq">\[(f+g)'=f'+g'\]</div>
+      <div class="formula-eq">\[(fg)'=f'g+fg'\]</div>
+      <div class="formula-eq">\[\left(\frac fg\right)'=\frac{f'g-fg'}{g^2}\]</div>
+      <div class="formula-eq">\[\frac{d}{dx}f(g(x))=f'(g(x))g'(x)\]</div>
+    </article>
+
+    <article class="formula-group">
+      <h3>انتگرال‌های پایه</h3>
+      <div class="formula-eq">\[\int x^n\,dx=\frac{x^{n+1}}{n+1}+C,\quad n\ne-1\]</div>
+      <div class="formula-eq">\[\int\frac1x\,dx=\ln|x|+C\]</div>
+      <div class="formula-eq">\[\int e^x\,dx=e^x+C\]</div>
+      <div class="formula-eq">\[\int\cos x\,dx=\sin x+C\]</div>
+      <div class="formula-eq">\[\int\sin x\,dx=-\cos x+C\]</div>
+    </article>
+
+    <article class="formula-group">
+      <h3>سری‌های معروف مک‌لورین</h3>
+      <div class="formula-eq">\[e^x=\sum_{n=0}^{\infty}\frac{x^n}{n!}\]</div>
+      <div class="formula-eq">\[\sin x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n+1}}{(2n+1)!}\]</div>
+      <div class="formula-eq">\[\cos x=\sum_{n=0}^{\infty}(-1)^n\frac{x^{2n}}{(2n)!}\]</div>
+      <div class="formula-eq">\[\ln(1+x)=\sum_{n=1}^{\infty}(-1)^{n+1}\frac{x^n}{n}\]</div>
+    </article>
+
+    <article class="formula-group">
+      <h3>حدهای معروف</h3>
+      <div class="formula-eq">\[\lim_{x\to0}\frac{\sin x}{x}=1\]</div>
+      <div class="formula-eq">\[\lim_{x\to0}\frac{1-\cos x}{x^2}=\frac12\]</div>
+      <div class="formula-eq">\[\lim_{x\to0}\frac{e^x-1}{x}=1\]</div>
+    </article>
+
+    <article class="formula-group">
+      <h3>مثلثات</h3>
+      <div class="formula-eq">\[\sin^2x+\cos^2x=1\]</div>
+      <div class="formula-eq">\[\tan x=\frac{\sin x}{\cos x}\]</div>
+      <div class="formula-eq">\[\sin(2x)=2\sin x\cos x\]</div>
+      <div class="formula-eq">\[\cos(2x)=\cos^2x-\sin^2x\]</div>
+    </article>
+
+  </div>
+</div>
+</section>
+
+<footer>
+  <div class="signature">MathLab <span style="color:#405777">/</span> <strong>Ho3ein Mx</strong></div>
+  <div>Designed &amp; Developed by Ho3ein Mx</div>
+</footer>
+</div>
+
+<script>
+/* Navigation */
+document.querySelectorAll(".nav button").forEach(button=>{
+  button.addEventListener("click",()=>{
+    document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    button.classList.add("active");
+    const page=document.getElementById(button.dataset.page);
+    page.classList.add("active");
+    typeset(page);
+    if(button.dataset.page==="graph"&&!gChartInstance) runGraph();
+  });
+});
+
+function typeset(element){
+  if(window.MathJax?.typesetPromise){
+    MathJax.typesetPromise([element]).catch(()=>{});
+  }
+}
+function setText(id,value){
+  const el=document.getElementById(id);
+  el.textContent=value;
+  el.classList.remove("error");
+}
+function showError(id,value){
+  const el=document.getElementById(id);
+  el.textContent=value;
+  el.classList.add("error");
+}
+function fmt(n,p=10){
+  if(typeof n!=="number"||!Number.isFinite(n))return String(n);
+  if(Object.is(n,-0))n=0;
+  return Number(n.toPrecision(p)).toString();
+}
+
+/* Calculator: no text input, so the device keyboard cannot open */
+let calcExpr="",calcAns=0,calcAngle="DEG",calcPrecision=8;
+function setAngle(mode){
+  calcAngle=mode;
+  document.getElementById("degBtn").classList.toggle("active",mode==="DEG");
+  document.getElementById("radBtn").classList.toggle("active",mode==="RAD");
+}
+function setPrecision(){
+  const next=prompt("دقت نمایش از 3 تا 14 رقم:",String(calcPrecision));
+  if(next===null)return;
+  const n=Number(next);
+  if(Number.isInteger(n)&&n>=3&&n<=14){
+    calcPrecision=n;
+    document.getElementById("precisionText").textContent=n;
+  }
+}
+function renderCalc(){
+  document.getElementById("calcExpression").textContent=calcExpr||"0";
+}
+function calcScope(){
+  const toRad=x=>calcAngle==="DEG"?x*Math.PI/180:x;
+  const fromRad=x=>calcAngle==="DEG"?x*180/Math.PI:x;
+  return {
+    Ans:calcAns,pi:Math.PI,e:Math.E,
+    sin:x=>Math.sin(toRad(x)),cos:x=>Math.cos(toRad(x)),tan:x=>Math.tan(toRad(x)),
+    asin:x=>fromRad(Math.asin(x)),acos:x=>fromRad(Math.acos(x)),atan:x=>fromRad(Math.atan(x)),
+    sqrt:x=>Math.sqrt(x),log:x=>Math.log10(x),ln:x=>Math.log(x)
+  };
+}
+function evaluateCalc(){
+  if(!calcExpr)return;
+  try{
+    const expression=calcExpr.replace(/×/g,"*").replace(/÷/g,"/")
+      .replace(/−/g,"-").replace(/π/g,"pi");
+    const result=math.evaluate(expression,calcScope());
+    if(typeof result!=="number"||!Number.isFinite(result))throw Error();
+    calcAns=result;
+    document.getElementById("calcAnswer").textContent=fmt(result,calcPrecision);
+    setText("calcMessage","محاسبه با موفقیت انجام شد.");
+  }catch{
+    showError("calcMessage","عبارت نامعتبر است یا نتیجه تعریف نشده است.");
+  }
+}
+document.getElementById("keypad").addEventListener("click",event=>{
+  const b=event.target.closest("button");
+  if(!b)return;
+  if(b.dataset.action==="clear"){
+    calcExpr="";
+    document.getElementById("calcAnswer").textContent="0";
+    setText("calcMessage","عبارت پاک شد.");
+    renderCalc();return;
+  }
+  if(b.dataset.action==="backspace"){calcExpr=calcExpr.slice(0,-1);renderCalc();return;}
+  if(b.dataset.action==="equals"){evaluateCalc();return;}
+  if(b.dataset.value){
+    calcExpr+=b.dataset.value;
+    renderCalc();
+    setText("calcMessage"," ");
+  }
+});
+
+/* Shared expression validation */
+const allowedFunctions = new Set([
+  "sin", "cos", "tan", "asin", "acos", "atan",
+  "sqrt", "abs", "log", "ln", "log10", "exp",
+  "floor", "ceil"
+]);
+function safeNode(expr){
+  const node=math.parse(expr);
+  const allowedSymbols=new Set(["x","pi","e"]);
+  node.traverse(child=>{
+    if(child.isFunctionNode){
+      if(!child.fn?.isSymbolNode||!allowedFunctions.has(child.fn.name))
+        throw Error("تابع مجاز نیست.");
+    }else if(child.isSymbolNode){
+      if(!allowedSymbols.has(child.name)&&!allowedFunctions.has(child.name))
+        throw Error("نماد مجاز نیست: "+child.name);
+    }else if(child.isAssignmentNode||child.isAccessorNode||child.isBlockNode){
+      throw Error("عبارت مجاز نیست.");
+    }
+  });
+  return node;
+}
+function evaluateFunction(expr, x) {
+  const normalized = expr.replace(/\bln\s*\(/g, "log(");
+  const result = safeNode(normalized).evaluate({
+    x,
+    pi: Math.PI,
+    e: Math.E
+  });
+
+  return typeof result === "number" && Number.isFinite(result)
+    ? result
+    : NaN;
+}
+function expressionLatex(expr){
+  try{
+    return math.parse(expr).toTex({parenthesis:"keep"});
+  }catch{return "\\text{"+String(expr).replace(/[{}\\]/g,"")+"}";}
+}
+function previewExpression(input){
+  const preview=document.getElementById(input.id.replace("Function","Preview"));
+  if(!preview)return;
+  const expr=input.value.trim();
+  preview.innerHTML=expr?"\\("+expressionLatex(expr)+"\\)":"\\(f(x)\\)";
+  typeset(preview);
+}
+
+/* GeoGebra-inspired on-screen math keypad for function editors */
+
+/* Advanced on-screen math keyboard */
+const mathKeys = [
+  {v:"7",l:"7"},{v:"8",l:"8"},{v:"9",l:"9"},{v:"/",l:"÷",c:"op"},{v:"^",l:"xʸ",c:"fn"},
+  {v:"4",l:"4"},{v:"5",l:"5"},{v:"6",l:"6"},{v:"*",l:"×",c:"op"},{v:"^2",l:"x²",c:"fn"},
+  {v:"1",l:"1"},{v:"2",l:"2"},{v:"3",l:"3"},{v:"+",l:"+",c:"op"},{v:"-",l:"−",c:"op"},
+  {v:"0",l:"0"},{v:".",l:"."},{v:"x",l:"x",c:"fn"},{v:"pi",l:"π",c:"fn"},{v:"e",l:"e",c:"fn"},
+  {v:"sin()",l:"sin",c:"fn",cursor:4},
+  {v:"cos()",l:"cos",c:"fn",cursor:4},
+  {v:"tan()",l:"tan",c:"fn",cursor:4},
+  {v:"asin()",l:"sin⁻¹",c:"fn",cursor:5},
+  {v:"acos()",l:"cos⁻¹",c:"fn",cursor:5},
+  {v:"atan()",l:"tan⁻¹",c:"fn",cursor:5},
+  {v:"sqrt()",l:"√",c:"fn",cursor:5},
+  {v:"abs()",l:"|x|",c:"fn",cursor:4},
+  {v:"log()",l:"log",c:"fn",cursor:4},
+  {v:"log10()",l:"log₁₀",c:"fn",cursor:6},
+  {v:"exp()",l:"eˣ",c:"fn",cursor:4},
+  {v:"ln()",l:"ln",c:"fn",cursor:3},
+  {v:"(",l:"(",c:"op"},{v:")",l:")",c:"op"},
+  {v:"()/()",l:"a⁄b",c:"fn",cursor:1},
+  {v:"^()",l:"xⁿ",c:"fn",cursor:2},
+  {v:"",l:"⌫",c:"danger",action:"backspace"},
+  {v:"",l:"AC",c:"danger",action:"clear"},
+  {v:"",l:"←",c:"utility",action:"left"},
+  {v:"",l:"→",c:"utility",action:"right"}
+];
+
+function setupExpressionEditors() {
+  document.querySelectorAll(".expression-input").forEach(input => {
+    // inputmode=none suppresses the mobile software keyboard on supported browsers.
+    input.setAttribute("inputmode", "none");
+    input.setAttribute("autocomplete", "off");
+    input.setAttribute("autocapitalize", "off");
+    input.setAttribute("spellcheck", "false");
+
+    previewExpression(input);
+
+    input.addEventListener("input", () => previewExpression(input));
+    input.addEventListener("focus", () => {
+      activeExpressionInput = input;
+    });
+    input.addEventListener("click", () => {
+      activeExpressionInput = input;
+    });
+
+    const keyboard = input.parentElement.querySelector(".math-keyboard");
+
+    keyboard.innerHTML =
+      mathKeys.map((key, index) => `
+        <button
+          type="button"
+          class="math-key ${key.c || ""}"
+          data-key-index="${index}"
+          aria-label="${key.l}"
+        >${key.l}</button>
+      `).join("") +
+      `<div class="keyboard-caption" style="grid-column:1/-1">
+        عبارت را با دکمه‌ها وارد کن. برای اصلاح از ⌫، AC و فلش‌های مکان‌نما استفاده کن.
+      </div>`;
+
+    keyboard.addEventListener("pointerdown", event => {
+      // Keep the expression field focused without opening the phone keyboard.
+      if (event.target.closest("button")) event.preventDefault();
+    });
+
+    keyboard.addEventListener("click", event => {
+      const button = event.target.closest("button[data-key-index]");
+      if (!button) return;
+
+      activeExpressionInput = input;
+      const key = mathKeys[Number(button.dataset.keyIndex)];
+
+      if (key.action) {
+        handleEditorAction(input, key.action);
+        return;
+      }
+
+      insertAtCursor(input, key.v, key.cursor);
+      previewExpression(input);
+    });
+  });
+}
+
+function handleEditorAction(input, action) {
+  let start = input.selectionStart ?? input.value.length;
+  let end = input.selectionEnd ?? start;
+
+  if (action === "clear") {
+    input.value = "";
+    input.setSelectionRange(0, 0);
+  } else if (action === "backspace") {
+    if (start === end && start > 0) start--;
+    input.setRangeText("", start, end, "end");
+  } else if (action === "left") {
+    const position = start === end ? Math.max(0, start - 1) : start;
+    input.setSelectionRange(position, position);
+  } else if (action === "right") {
+    const position = start === end ? Math.min(input.value.length, end + 1) : end;
+    input.setSelectionRange(position, position);
+  }
+
+  input.dispatchEvent(new Event("input", {bubbles:true}));
+  previewExpression(input);
+}
+
+function insertAtCursor(input, text, cursorOffset) {
+  const start = input.selectionStart ?? input.value.length;
+  const end = input.selectionEnd ?? start;
+
+  input.setRangeText(text, start, end, "select");
+
+  const desiredPosition =
+    start + (Number.isInteger(cursorOffset) ? cursorOffset : text.length);
+
+  input.setSelectionRange(desiredPosition, desiredPosition);
+  input.dispatchEvent(new Event("input", {bubbles:true}));
+  previewExpression(input);
+}
+
+setupExpressionEditors();
+
+/* Taylor series */
+let tChartInstance=null;
+function factorial(n){let v=1;for(let i=2;i<=n;i++)v*=i;return v;}
+function tValue(type,x){
+  if(type==="exp")return Math.exp(x);
+  if(type==="sin")return Math.sin(x);
+  if(type==="cos")return Math.cos(x);
+  if(type==="ln")return x>-1?Math.log1p(x):NaN;
+  if(type==="atan")return Math.atan(x);
+  if(type==="geom")return x!==1?1/(1-x):NaN;
+  return NaN;
+}
+
+function coefficient(type, k, a) {
+  if (type === "exp") return Math.exp(a) / factorial(k);
+  if (type === "sin") return Math.sin(a + k * Math.PI / 2) / factorial(k);
+  if (type === "cos") return Math.cos(a + k * Math.PI / 2) / factorial(k);
+
+  if (type === "ln") {
+    if (k === 0) return Math.log(1 + a);
+    return (k % 2 ? 1 : -1) / (k * Math.pow(1 + a, k));
+  }
+
+  if (type === "geom") return 1 / Math.pow(1 - a, k + 1);
+
+  if (type === "atan") {
+    if (k === 0) return Math.atan(a);
+
+    // Coefficients of 1 / (1 + (a+h)^2)
+    const q0 = 1 + a * a;
+    const q1 = 2 * a;
+    const q2 = 1;
+    const b = [1 / q0];
+
+    if (k >= 2) b.push(-q1 * b[0] / q0);
+
+    for (let j = 2; j < k; j++) {
+      b[j] = -(q1 * b[j - 1] + q2 * b[j - 2]) / q0;
+    }
+
+    return b[k - 1] / k;
+  }
+
+  return 0;
+}
+
+/* Display a coefficient as a fraction when it has a simple,
+   sufficiently accurate rational representation. */
+function fractionLatex(value, maxDenominator = 10000) {
+  if (!Number.isFinite(value)) return "\\text{نامعتبر}";
+  if (Math.abs(value) < 1e-12) return "0";
+
+  const sign = value < 0 ? "-" : "";
+  const absolute = Math.abs(value);
+
+  if (Math.abs(absolute - Math.round(absolute)) < 1e-10) {
+    return sign + String(Math.round(absolute));
+  }
+
+  for (let denominator = 2; denominator <= maxDenominator; denominator++) {
+    const numerator = Math.round(absolute * denominator);
+
+    if (
+      numerator !== 0 &&
+      Math.abs(absolute - numerator / denominator) < 1e-10
+    ) {
+      return sign + "\\frac{" + numerator + "}{" + denominator + "}";
+    }
+  }
+
+  return sign + fmt(absolute, 8);
+}
+
+function tTermLatex(c, k, a) {
+  if (!Number.isFinite(c) || Math.abs(c) < 1e-12) return "";
+
+  const coefficientLatex = fractionLatex(Math.abs(c));
+  let power = "";
+
+  if (k > 0) {
+    const base = Math.abs(a) < 1e-12
+      ? "x"
+      : "\\left(x-" + fmt(a, 8) + "\\right)";
+
+    power = k === 1 ? base : base + "^{" + k + "}";
+  }
+
+  // Avoid displaying 1x, 1x², etc.
+  const factor =
+    k > 0 && Math.abs(Math.abs(c) - 1) < 1e-12
+      ? ""
+      : coefficientLatex;
+
+  return factor + power;
+}
+
+function runTaylor() {
+  const type = document.getElementById("tFunction").value;
+  const a = Number(document.getElementById("tCenter").value);
+  const n = Number(document.getElementById("tDegree").value);
+  const x = Number(document.getElementById("tX").value);
+
+  if (
+    !Number.isFinite(a) ||
+    !Number.isFinite(x) ||
+    !Number.isInteger(n) ||
+    n < 1 ||
+    n > 20
+  ) {
+    showError("tChartMessage", "مقادیر واردشده معتبر نیستند.");
+    return;
+  }
+
+  if (type === "ln" && a <= -1) {
+    showError("tChartMessage", "مرکز بسط تابع ln(1+x) باید بزرگ‌تر از 1- باشد.");
+    return;
+  }
+
+  if (type === "geom" && Math.abs(a - 1) < 1e-12) {
+    showError("tChartMessage", "تابع در مرکز انتخاب‌شده تعریف نشده است.");
+    return;
+  }
+
+  const coeffs = Array.from(
+    { length: n + 1 },
+    (_, k) => coefficient(type, k, a)
+  );
+
+  if (coeffs.some(c => !Number.isFinite(c))) {
+    showError("tChartMessage", "ضرایب این بسط در مرکز انتخاب‌شده قابل محاسبه نیستند.");
+    return;
+  }
+
+  const poly = z =>
+    coeffs.reduce((sum, c, k) => sum + c * Math.pow(z - a, k), 0);
+
+  const approx = poly(x);
+  const actual = tValue(type, x);
+  const err = Math.abs(actual - approx);
+
+  setText("tApprox", fmt(approx, 12));
+  setText("tActual", Number.isFinite(actual) ? fmt(actual, 12) : "تعریف‌نشده");
+  setText("tError", Number.isFinite(err) ? fmt(err, 12) : "قابل محاسبه نیست");
+
+  const terms = [];
+
+  coeffs.forEach((c, k) => {
+    if (Math.abs(c) < 1e-12) return;
+
+    const term = tTermLatex(c, k, a);
+    const sign = c < 0 ? "-" : "+";
+
+    if (terms.length === 0) {
+      terms.push((c < 0 ? "-" : "") + term);
+    } else {
+      terms.push(" " + sign + " " + term);
+    }
+  });
+
+  const polynomialLatex =
+    "\\(P_{" + n + "}(x)=" + (terms.join("") || "0") + "\\)";
+
+  document.getElementById("tPolynomial").innerHTML = polynomialLatex;
+
+  document.getElementById("tTerms").innerHTML = coeffs.map((c, k) => {
+    const term = tTermLatex(c, k, a);
+    const signedTerm = c < 0 ? "-" + term : term;
+
+    return `
+      <tr>
+        <td>${k}</td>
+        <td>\\(${signedTerm || "0"}\\)</td>
+        <td>\\(${fractionLatex(c)}\\)</td>
+      </tr>
+    `;
+  }).join("");
+
+  typeset(document.getElementById("tPolynomial"));
+  typeset(document.getElementById("tTerms"));
+
+  drawTaylor(type, a, poly, x);
+}
+
+function drawTaylor(type,a,poly,selectedX){
+  const pointsA=[],pointsP=[],min=selectedX-4,max=selectedX+4;
+  for(let i=0;i<=200;i++){
+    const x=min+(max-min)*i/200;
+    const ya=tValue(type,x),yp=poly(x);
+    pointsA.push({x,y:Number.isFinite(ya)&&Math.abs(ya)<1e6?ya:null});
+    pointsP.push({x,y:Number.isFinite(yp)&&Math.abs(yp)<1e6?yp:null});
+  }
+  if(tChartInstance)tChartInstance.destroy();
+  tChartInstance=new Chart(document.getElementById("tChart"),{
+    type:"line",data:{datasets:[
+      {label:"تابع اصلی",data:pointsA,parsing:false,borderColor:"#67e8f9",borderWidth:2,pointRadius:0,spanGaps:false},
+      {label:"تقریب تیلور",data:pointsP,parsing:false,borderColor:"#a78bfa",borderWidth:2,pointRadius:0,spanGaps:false}
+    ]},
+    options:chartOptions()
+  });
+  setText("tChartMessage","تابع اصلی و تقریب تیلور در یک بازه مشترک نمایش داده شده‌اند.");
+}
+
+/* Load symbolic calculus library on demand */
+function loadScript(src){
+  return new Promise((resolve,reject)=>{
+    const script=document.createElement("script");
+    script.src=src;script.onload=resolve;
+    script.onerror=()=>reject(Error("بارگذاری کتابخانه ریاضی ناموفق بود."));
+    document.head.appendChild(script);
+  });
+}
+async function loadNerdamer(){
+  if(window.nerdamer)return;
+  await loadScript("https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/nerdamer.core.js");
+  await loadScript("https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Algebra.js");
+  await loadScript("https://cdn.jsdelivr.net/npm/nerdamer@1.1.13/Calculus.js");
+}
+function nerdamerLatex(expression){
+  try{return nerdamer(expression).toTeX();}
+  catch{return expressionLatex(expression);}
+}
+async function runDerivative(){
+  const expr=document.getElementById("dFunction").value.trim();
+  const order=Number(document.getElementById("dOrder").value);
+  const point=Number(document.getElementById("dPoint").value);
+  try{
+    await loadNerdamer();
+    let result=expr;
+    for(let i=0;i<order;i++)result=nerdamer.diff(result,"x").toString();
+    document.getElementById("dResult").innerHTML="\\("+nerdamerLatex(result)+"\\)";
+    try{setText("dAtPoint",fmt(evaluateFunction(result,point),12));}
+    catch{setText("dAtPoint","در این نقطه قابل محاسبه نیست.");}
+    setText("dMessage","مشتق نمادین محاسبه شد.");
+    typeset(document.getElementById("dResult"));
+  }catch(error){showError("dMessage",error.message||"محاسبه مشتق انجام نشد.");}
+}
+async function runIntegral(){
+  const expr=document.getElementById("iFunction").value.trim();
+  const type=document.getElementById("iType").value;
+  const lower=Number(document.getElementById("iLower").value);
+  const upper=Number(document.getElementById("iUpper").value);
+  try{
+    await loadNerdamer();
+    const primitive=nerdamer.integrate(expr,"x").toString();
+    document.getElementById("iResult").innerHTML="\\("+nerdamerLatex(primitive)+"+C\\)";
+    typeset(document.getElementById("iResult"));
+    if(type==="indefinite"){
+      setText("iDefinite","—");
+      setText("iMessage","انتگرال نامعین محاسبه شد.");return;
+    }
+    if(!Number.isFinite(lower)||!Number.isFinite(upper))throw Error("حدود انتگرال معتبر نیستند.");
+    const upperValue=Number(nerdamer(primitive,{x:upper}).evaluate().text("decimals",14));
+    const lowerValue=Number(nerdamer(primitive,{x:lower}).evaluate().text("decimals",14));
+    const value=upperValue-lowerValue;
+    setText("iDefinite",Number.isFinite(value)?fmt(value,12):"مقدار عددی در دسترس نیست.");
+    setText("iMessage","مقدار عددی از تابع اولیه و دو کران به دست آمده است.");
+  }catch(error){showError("iMessage",error.message||"محاسبه انتگرال انجام نشد.");}
+}
+
+/* Numerical limits */
+function runLimit(){
+  const expr=document.getElementById("lFunction").value.trim();
+  const point=Number(document.getElementById("lPoint").value);
+  const side=document.getElementById("lSide").value;
+  if(!Number.isFinite(point)){showError("lMessage","نقطه حد معتبر نیست.");return;}
+  function estimate(direction){
+    const distances=[1e-2,1e-3,1e-4,1e-5,1e-6,1e-7];
+    const values=[];
+    for(const d of distances){
+      try{const v=evaluateFunction(expr,point+direction*d);if(Number.isFinite(v)&&Math.abs(v)<1e12)values.push(v);}catch{}
+    }
+    return values.length?values[values.length-1]:NaN;
+  }
+  const left=side==="right"?NaN:estimate(-1);
+  const right=side==="left"?NaN:estimate(1);
+  setText("lLeft",Number.isFinite(left)?fmt(left,10):"قابل محاسبه نیست");
+  setText("lRight",Number.isFinite(right)?fmt(right,10):"قابل محاسبه نیست");
+  if(Number.isFinite(left)&&Number.isFinite(right)){
+    const tolerance=1e-3*Math.max(1,Math.abs(left),Math.abs(right));
+    if(Math.abs(left-right)<tolerance){
+      document.getElementById("lConclusion").innerHTML="\\(\\approx "+fmt((left+right)/2,10)+"\\)";
+      setText("lMessage","مقادیر دو طرف نزدیک‌اند؛ این بررسی عددی است، نه اثبات نمادین.");
+    }else{
+      setText("lConclusion","حد دوطرفه احتمالاً وجود ندارد.");
+      setText("lMessage","مقادیر عددی دو طرف با یکدیگر سازگار نیستند.");
+    }
+  }else if(Number.isFinite(left)){
+    setText("lConclusion","حد چپ ≈ "+fmt(left,10));
+    setText("lMessage","فقط سمت چپ بررسی شد.");
+  }else if(Number.isFinite(right)){
+    setText("lConclusion","حد راست ≈ "+fmt(right,10));
+    setText("lMessage","فقط سمت راست بررسی شد.");
+  }else{
+    setText("lConclusion","نتیجه مشخص نشد.");
+    showError("lMessage","تابع در نقاط نزدیک به نقطه حد قابل ارزیابی نیست.");
+  }
+  typeset(document.getElementById("lConclusion"));
+}
+
+/* Graphing */
+let gChartInstance=null;
+function chartOptions(enableZoom = false) {
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+
+    interaction: {
+      intersect: false,
+      mode: "nearest"
+    },
+
+    plugins: {
+      legend: {
+        labels: {
+          color: "#dce7f8",
+          font: { family: "Vazirmatn" }
+        }
+      }
+    },
+
+    scales: {
+      x: {
+        type: "linear",
+        title: {
+          display: true,
+          text: "x",
+          color: "#93a4bf"
+        },
+        ticks: { color: "#93a4bf" },
+        grid: { color: "#24334d" }
+      },
+
+      y: {
+        title: {
+          display: true,
+          text: "f(x)",
+          color: "#93a4bf"
+        },
+        ticks: { color: "#93a4bf" },
+        grid: { color: "#24334d" }
+      }
+    }
+  };
+
+  if (enableZoom) {
+    options.plugins.zoom = {
+      pan: {
+        enabled: true,
+        mode: "xy"
+      },
+
+      zoom: {
+        mode: "xy",
+
+        wheel: {
+          enabled: true,
+          speed: 0.08
+        },
+
+        pinch: {
+          enabled: true
+        },
+
+        drag: {
+          enabled: false
+        }
+      }
+    };
+  }
+
+  return options;
+}
+function runGraph(){
+  const expr=document.getElementById("gFunction").value.trim();
+  const minX=Number(document.getElementById("gMin").value);
+  const maxX=Number(document.getElementById("gMax").value);
+  if(!Number.isFinite(minX)||!Number.isFinite(maxX)||minX>=maxX){
+    showError("gMessage","بازه نمودار معتبر نیست.");return;
+  }
+  try{
+    safeNode(expr);
+    const points=[];
+    for(let i=0;i<=400;i++){
+      const x=minX+(maxX-minX)*i/400;
+      let y;try{y=evaluateFunction(expr,x);}catch{y=NaN;}
+      points.push({x,y:Number.isFinite(y)&&Math.abs(y)<1e6?y:null});
+    }
+    if(gChartInstance)gChartInstance.destroy();
+    gChartInstance=new Chart(document.getElementById("gChart"),{
+      type:"line",
+      data:{datasets:[{label:"f(x) = "+expr,data:points,parsing:false,borderColor:"#67e8f9",borderWidth:2,pointRadius:0,spanGaps:false}]},
+      options:chartOptions(true)
+    });
+    setText("gMessage","نمودار رسم شد. برای توابع مثلثاتی، زاویه‌ها بر حسب رادیان هستند.");
+  }catch(error){showError("gMessage",error.message||"رسم نمودار انجام نشد.");}
+}
+document.querySelectorAll(".preset").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const input=document.getElementById("gFunction");
+    input.value=button.dataset.func;
+    previewExpression(input);
+    runGraph();
+  });
+});
+
+function zoomGraph(factor) {
+  if (!gChartInstance) {
+    runGraph();
+    if (!gChartInstance) return;
+  }
+
+  const chart = gChartInstance;
+
+  ["x", "y"].forEach(axis => {
+    const scale = chart.scales[axis];
+    if (!scale) return;
+
+    const currentMin = scale.min;
+    const currentMax = scale.max;
+    const center = (currentMin + currentMax) / 2;
+    const halfRange = (currentMax - currentMin) / 2 / factor;
+
+    if (!Number.isFinite(halfRange) || halfRange <= 0) return;
+
+    chart.options.scales[axis].min = center - halfRange;
+    chart.options.scales[axis].max = center + halfRange;
+  });
+
+  chart.update("none");
+}
+
+function resetGraphZoom() {
+  if (!gChartInstance) {
+    runGraph();
+    return;
+  }
+
+  const chart = gChartInstance;
+  const minX = Number(document.getElementById("gMin").value);
+  const maxX = Number(document.getElementById("gMax").value);
+
+  // Reset the plugin's own zoom state when available.
+  if (typeof chart.resetZoom === "function") {
+    chart.resetZoom();
+  }
+
+  chart.options.scales.x.min = minX;
+  chart.options.scales.x.max = maxX;
+  chart.options.scales.y.min = undefined;
+  chart.options.scales.y.max = undefined;
+
+  chart.update();
+}
+
+
+
+/* Initial state */
+renderCalc();
+</script>
+</body>
+</html>
