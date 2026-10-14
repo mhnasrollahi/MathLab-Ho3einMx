@@ -1,0 +1,65 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#172b50"/>
+      <stop offset="55%" stop-color="#080f20"/>
+      <stop offset="100%" stop-color="#020711"/>
+    </linearGradient>
+
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a5f3ff"/>
+      <stop offset="45%" stop-color="#31cfff"/>
+      <stop offset="100%" stop-color="#536dff"/>
+    </linearGradient>
+
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#8cecff"/>
+      <stop offset="100%" stop-color="#438bff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep space background -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+
+  <!-- Subtle orbital ring -->
+  <ellipse cx="32" cy="32" rx="25" ry="17"
+    transform="rotate(-35 32 32)"
+    fill="none" stroke="#168bd4" stroke-width=".7" opacity=".5"/>
+
+  <!-- Neon M -->
+  <path d="M12 46V18L25 34L38 18V46"
+    fill="none" stroke="#159dff" stroke-width="7"
+    stroke-linecap="round" stroke-linejoin="round"
+    opacity=".55" filter="url(#glow)"/>
+
+  <path d="M12 46V18L25 34L38 18V46"
+    fill="none" stroke="url(#metal)" stroke-width="4.2"
+    stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Interlocked X -->
+  <path d="M32 29L51 48M51 29L32 48"
+    fill="none" stroke="#00cfff" stroke-width="7"
+    stroke-linecap="round" opacity=".6" filter="url(#glow)"/>
+
+  <path d="M32 29L51 48M51 29L32 48"
+    fill="none" stroke="url(#neon)" stroke-width="4.2"
+    stroke-linecap="round"/>
+
+  <!-- Tech accents -->
+  <circle cx="49" cy="13" r="2" fill="#8ff5ff" filter="url(#glow)"/>
+  <path d="M43 9H48M45.5 6.5V11.5"
+    stroke="#38bfff" stroke-width="1" stroke-linecap="round"/>
+
+  <circle cx="13" cy="52" r="1.3" fill="#4a9eff"/>
+  <path d="M18 53H25" stroke="#3f8dff" stroke-width="1" opacity=".8"/>
+</svg>
